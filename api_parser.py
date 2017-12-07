@@ -59,6 +59,9 @@ class AbeSearchParser(HTMLParser):
                 self._current_listing['price'] = price
             self._capture_price = False
 
+    def error(self, message):
+        pass
+
 
 def parse_html(html):
     parser = AbeSearchParser()

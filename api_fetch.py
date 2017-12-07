@@ -21,13 +21,13 @@ def parse_format(x):
     return 0
 
 
-def get_html_for_search(author, title='', publisher='', year=2017, format=False):
+def get_html_for_search(author, title, publisher, year, fmt):
     querystring = {
         'an': author,
         'pn': publisher,
         'tn': title,
         'yrh': year if 999 < year < 10000 else '',
-        'bi': parse_format(format)
+        'bi': parse_format(fmt)
     }
     url = 'https://www.abebooks.com/servlet/SearchResults?bx=off&ds=50&recentlyadded=all&sortby=17&sts=t&' + \
           urllib.parse.urlencode(querystring)
