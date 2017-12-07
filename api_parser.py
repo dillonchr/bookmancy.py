@@ -3,7 +3,7 @@ from html.parser import HTMLParser
 
 class AbeSearchParser(HTMLParser):
     def __init__(self):
-        self._listings = []
+        self.listings = []
         self._current_listing = None
         self._capture_price = False
         super().__init__()
@@ -35,7 +35,7 @@ class AbeSearchParser(HTMLParser):
         in_listing = self._current_listing is not None
         if len([t for t in attrs if t[0] == 'id' and t[1].startswith('book-')]) > 0:
             if in_listing:
-                self._listings.append(self._current_listing)
+                self.listings.append(self._current_listing)
             self._current_listing = {}
         elif in_listing and tag == 'meta':
             self.handle_metatag(attrs)
@@ -47,9 +47,8 @@ class AbeSearchParser(HTMLParser):
                 self._current_listing['image'] = None if src.startswith('//') else src
 
     def handle_endtag(self, tag):
-        if tag == 'body':
-            self._listings.append(self._current_listing)
-            [print(l) for l in self._listings]
+        if self._current_listing is not None and tag == 'body':
+            self.listings.append(self._current_listing)
 
     def handle_data(self, data):
         if self._capture_price:
@@ -64,3 +63,4 @@ class AbeSearchParser(HTMLParser):
 def parse_html(html):
     parser = AbeSearchParser()
     parser.feed(html)
+    return parser.listings
