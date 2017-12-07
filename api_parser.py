@@ -58,6 +58,7 @@ class AbeSearchParser(HTMLParser):
                 self._current_listing['shipping'] = price
             else:
                 self._current_listing['price'] = price
+            self._capture_price = False
 
 
 def parse_html(html):
