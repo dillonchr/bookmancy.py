@@ -10,8 +10,8 @@ class AbeSearchParser(HTMLParser):
 
     @staticmethod
     def get_item_prop(attrs, prop):
-        if len([t for t in attrs if t[0] == 'itemprop' and t[1] == prop]) > 0:
-            return [t[1] for t in attrs if t[0] == 'content'][0]
+        if AbeSearchParser.has_attr(attrs, 'itemprop', prop):
+            return AbeSearchParser.get_attr(attrs, 'content')
         return False
 
     @staticmethod
