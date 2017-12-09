@@ -33,7 +33,7 @@ class AbeSearchParser(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         in_listing = self._current_listing is not None
-        if len([t for t in attrs if t[0] == 'id' and t[1].startswith('book-')]) > 0:
+        if self.has_attr(attrs, 'id', 'book-'):
             if in_listing:
                 self.listings.append(self._current_listing)
             self._current_listing = {}
